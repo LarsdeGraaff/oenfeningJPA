@@ -12,34 +12,9 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-public class BookTest {
-    private Logger logger = LoggerFactory.getLogger(getClass());
-    private static EntityManagerFactory entityManagerFactory;
-    private EntityManager entityManager;
+public class BookTest extends AbstractBookTest {
 
     //private EntityManager em;
-
-    @BeforeClass
-    public static void initializeEntityManagerFactory(){
-        entityManagerFactory = Persistence.createEntityManagerFactory("RealDolmenPersistenceUnit");
-    }
-
-    @AfterClass
-    public static void destroyEntityManagerFactory() {
-        entityManagerFactory.close();
-    }
-
-    @Before
-    public void initializeEntityManager(){
-        entityManager=entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-    }
-
-    @After
-    public void destroyEntityManager(){
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
 
 
     @Test
@@ -52,5 +27,10 @@ public class BookTest {
 
     }
 
+    @Test
+    public void testReturnExactlyTwoBooks() throws Exception {
+        List<Book> books= entityManager.createQuery("Select b from Book b", Book.class).getResultList();
+        assertEquals(2, books.size());
 
+    }
 }
