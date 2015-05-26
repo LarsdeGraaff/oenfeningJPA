@@ -1,5 +1,5 @@
 
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,35 +12,43 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created by jeansmits on 26/05/15.
- */
-
-
 public class BookTest {
-    private Logger logger = LoggerFactory.getLogger(BookTest.class);
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private static EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
 
-    private EntityManager em;
+    //private EntityManager em;
+
+    @BeforeClass
+    public static void initializeEntityManagerFactory(){
+        entityManagerFactory = Persistence.createEntityManagerFactory("RealDolmenPersistenceUnit");
+    }
+
+    @AfterClass
+    public static void destroyEntityManagerFactory() {
+        entityManagerFactory.close();
+    }
+
+    @Before
+    public void initializeEntityManager(){
+        entityManager=entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+    }
+
+    @After
+    public void destroyEntityManager(){
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+
     @Test
     public void testOurLogic() {
-        EntityManagerFactory entityManagerFactory = Persistence
-                .createEntityManagerFactory("RealDolmenPersistenceUnit");
-        EntityManager em =
-                entityManagerFactory.createEntityManager();
-        em.getTransaction().
 
-                begin();
-
-        BookRepository bookRepository = new BookRepositoryBean(em);
+        BookRepository bookRepository = new BookRepositoryBean(entityManager);
         List<Book> books = bookRepository.findAllBooks();
         assertEquals(2, books.size());
 
-        em.getTransaction().
-
-                commit();
-
-        em.close();
-        entityManagerFactory.close();
 
     }
 
