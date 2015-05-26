@@ -1,5 +1,13 @@
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
+
 
 
 import static junit.framework.Assert.assertEquals;
@@ -10,13 +18,30 @@ import static junit.framework.Assert.assertEquals;
 
 
 public class BookTest {
+    private Logger logger = LoggerFactory.getLogger(BookTest.class);
 
     private EntityManager em;
-    @BookTest
+    @Test
     public void testOurLogic() {
+        EntityManagerFactory entityManagerFactory = Persistence
+                .createEntityManagerFactory("RealDolmenPersistenceUnit");
+        EntityManager em =
+                entityManagerFactory.createEntityManager();
+        em.getTransaction().
+
+                begin();
+
         BookRepository bookRepository = new BookRepositoryBean(em);
         List<Book> books = bookRepository.findAllBooks();
         assertEquals(2, books.size());
+
+        em.getTransaction().
+
+                commit();
+
+        em.close();
+        entityManagerFactory.close();
+
     }
 
 
