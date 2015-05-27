@@ -29,8 +29,6 @@ public class Passenger implements Serializable {
     public Passenger() {
     }
 
-
-
     public int getId() {
         return id;
     }
@@ -39,9 +37,7 @@ public class Passenger implements Serializable {
         this.id = id;
     }
 
-    public byte[] getPicture() {
-        return picture;
-    }
+    public byte[] getPicture() { return picture;    }
 
     public void setPicture(byte[] picture) {
         this.picture = picture;
