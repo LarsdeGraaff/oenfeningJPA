@@ -33,4 +33,5 @@ public class BookTest extends AbstractBookTest {
         assertEquals(2, books.size());
 
     }
+
 }

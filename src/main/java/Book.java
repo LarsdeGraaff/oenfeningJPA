@@ -17,7 +17,7 @@ public class Book implements Serializable{
     private String author;
     private String isbn;
 
-    public Book() {
+    public Book(String s) {
     }
 
 
