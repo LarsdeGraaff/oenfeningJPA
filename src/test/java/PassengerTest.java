@@ -13,12 +13,14 @@ public class PassengerTest extends AbstractBookTest{
 
         Passenger p =new Passenger(null,"youri","tielemans","18",10000 );
         Passenger p2 =new Passenger(null,"Luc","Nilis","48",25000 );
+        Passenger p3 = new Passenger(null,"Dennis","Bergkamp","50",30000);
+        entityManager.persist(p3);
         entityManager.persist(p);
         entityManager.persist(p2);
-
         p.setLastName("HELD TIELEMANS");
-        Passenger pssngrDB = entityManager.find(Passenger.class,0);
-        assertEquals(pssngrDB.getLastName(), p.getLastName());
+        Passenger pssngrDB = entityManager.find(Passenger.class,1);
+        assertEquals(pssngrDB.getLastName(), p3.getLastName());
+
     }
 
 //    @Test

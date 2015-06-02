@@ -20,6 +20,8 @@ public class Book implements Serializable{
     public Book(String s) {
     }
 
+    public Book() {
+    }
 
     public Integer getId() {
         return id;
